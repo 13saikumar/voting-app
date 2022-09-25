@@ -1,0 +1,42 @@
+pipeline{
+    
+    agent any
+    
+    tools {
+        maven 'Maven 3.6.1'
+    }
+    
+    stages{
+        stage("Build") {
+            steps{
+                echo "Building a project"
+                dir('worker'){
+                    sh "mvn compile"
+                }
+            }
+        }
+        stage("Test") {
+            steps{
+                echo "Testing the project"
+                dir('worker'){
+                    sh "mvn test"
+                }
+            }
+        }
+        stage("Package") {
+            steps{
+                echo "Packaging the product"
+                dir('worker'){
+                    sh "mvn package -DskipTests"
+                }
+            }
+        }
+    }
+    
+    post{
+        always{
+            echo "This line printed after job is executed"
+        }
+    }
+    
+}
