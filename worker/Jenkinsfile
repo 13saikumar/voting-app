@@ -1,11 +1,11 @@
 pipeline{
-    
+
     agent any
-    
+
     tools {
         maven 'Maven 3.6.1'
     }
-    
+
     stages{
         stage("Build") {
             steps{
@@ -24,6 +24,10 @@ pipeline{
             }
         }
         stage("Package") {
+            when{
+                branch 'master'
+                changeset "**/worker/**"
+            }
             steps{
                 echo "Packaging the product"
                 dir('worker'){
@@ -32,11 +36,11 @@ pipeline{
             }
         }
     }
-    
+
     post{
         always{
             echo "This line printed after job is executed"
         }
     }
-    
+
 }
