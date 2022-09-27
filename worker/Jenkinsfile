@@ -32,6 +32,7 @@ pipeline{
                 echo "Packaging the product"
                 dir('worker'){
                     sh "mvn package -DskipTests"
+                    archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
                 }
             }
         }
@@ -40,7 +41,6 @@ pipeline{
     post{
         always{
             echo "Pipeline execution is complete...."
-            archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
         }
     }
 
