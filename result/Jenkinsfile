@@ -3,7 +3,7 @@ pipeline{
     agent any
 
     tools {
-        maven 'nodejs8.16'
+        nodejs 'nodejs8.16'
     }
 
     stages{
