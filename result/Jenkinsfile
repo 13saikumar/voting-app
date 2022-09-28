@@ -1,10 +1,11 @@
 pipeline{
 
-    agent any
-
-    tools {
-        nodejs 'nodejs8.16'
-    }
+    agent{
+        docker{
+            image 'node:8.16.0-alpine'
+            args '-v $HOME/.m2:/root/.m2'
+        }
+    }   
 
     stages{
         stage("Build") {
