@@ -31,16 +31,19 @@ pipeline{
                 }
             }
         }
-        stage("Package") {
+        stage("docker-Package") {
             when{
                 branch 'master'
                 changeset "**/worker/**"
             }
             steps{
-                echo "Packaging the product"
-                dir('worker'){
-                    sh "mvn package -DskipTests"
-                    archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
+                echo "Packaging the product using docker"
+                script{
+                    docker.withRegistry('https://index.docker.io/v1', 'dockerlogin'){
+                        def workerImg = docker.build("itachi0139/workerbuild:v${BUILD_ID}","./worker")
+                        workerImg.push()
+                        workerImg.push("${env.BRANCH_NAME}")
+                    }
                 }
             }
         }
