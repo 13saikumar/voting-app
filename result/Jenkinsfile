@@ -24,8 +24,23 @@ pipeline{
                 }
             }
         }
+        stage("docker-Package") {
+            agent any
+            when{
+                changeset "**/result/**"
+            }
+            steps{
+                echo "Packaging the product using docker"
+                script{
+                    docker.withRegistry('https://index.docker.io/v1/', 'dockerlogin'){
+                        def workerImg = docker.build("itachi0139/resultbuild:v${BUILD_ID}","./result")
+                        workerImg.push()
+                        workerImg.push("${env.BRANCH_NAME}")
+                    }
+                }
+            }
+        }
     }
-
     post{
         always{
             echo "Pipeline execution is complete...."
