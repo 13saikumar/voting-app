@@ -129,6 +129,7 @@ pipeline{
             steps{
                 echo "Testing the project"
                 dir('result'){
+                    sh "npm install"
                     sh "npm test"
                 }
             }
