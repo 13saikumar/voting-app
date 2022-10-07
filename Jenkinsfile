@@ -174,9 +174,7 @@ pipeline {
     stage('Deploy to Dev') {
       agent any
       steps {
-        sh 'pwd'
         dir("env.${WORKSPACE}/votingapp"){
-          sh 'pwd'
           sh 'docker compose up -d'
         }
       }
