@@ -174,7 +174,9 @@ pipeline {
     stage('Deploy to Dev') {
       agent any
       steps {
-        sh 'docker-compose up -d'
+        dir("env.${WORKSPACE}/votingapp"){
+          sh 'docker-compose up -d'
+        }
       }
     }
 
