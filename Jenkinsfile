@@ -177,7 +177,7 @@ pipeline {
         sh 'pwd'
         dir("env.${WORKSPACE}/votingapp"){
           sh 'pwd'
-          sh 'docker-compose up -d'
+          sh 'docker compose up -d'
         }
       }
     }
