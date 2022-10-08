@@ -175,6 +175,8 @@ pipeline {
       agent any
       steps {
         dir("env.${WORKSPACE}/votingapp"){
+          sh 'docker version'
+          sh 'docker compose version'
           sh 'docker compose up'
         }
       }
